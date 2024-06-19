@@ -21,6 +21,7 @@ import time
 import datetime
 import argparse
 
+
 logger = logging.getLogger()
 
 def str2bool(v):
@@ -56,7 +57,7 @@ def parse_args():
             '--n_img_per_gpu',
             dest = 'n_img_per_gpu',
             type = int,
-            default = 16,
+            default = 4,
             )
     parse.add_argument(
             '--max_iter',
@@ -153,12 +154,9 @@ def train():
     
     
     torch.cuda.set_device(args.local_rank)
-    dist.init_process_group(
-                backend = 'nccl',
-                init_method = 'tcp://127.0.0.1:33274',
-                world_size = torch.cuda.device_count(),
-                rank=args.local_rank
-                )
+    dist.init_process_group( backend = 'nccl', 
+                            world_size = torch.cuda.device_count(), 
+                            rank=args.local_rank )
     
     setup_logger(args.respath)
     ## dataset
