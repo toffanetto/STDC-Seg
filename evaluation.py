@@ -61,10 +61,10 @@ class MscEvalV0(object):
             preds = torch.argmax(probs, dim=1) # Predicted class
             
             preds_tensor = preds[0].cpu()
-            preds_np = preds_tensor.numpy() # Matriz of predicted classes 
+            preds_np = preds_tensor.numpy() # Matrix of predicted classes 
             image_preds = get_class_colors(preds_np)
             im = Image.fromarray(image_preds, "RGB")
-            im.save("./output/image_"+str(name[0])+".png")
+            im.save("./output/prediction_"+str(name[0])+".png")
             
             label_np = label_raw[0][0].numpy()
             
@@ -74,12 +74,12 @@ class MscEvalV0(object):
             
             plt.figure(figsize=(21,8))
             plt.subplot(1,3,1)
-            plt.title('Road picure', fontsize = 16)
+            plt.title('Input', fontsize = 16)
             plt.imshow(img_raw)
             plt.axis('off')
             plt.subplot(1,3,2)
             plt.imshow(image_preds)
-            plt.title('Predicted', fontsize = 16)
+            plt.title('Prediction', fontsize = 16)
             plt.axis('off')
             plt.subplot(1,3,3)
             plt.imshow(image_label)
