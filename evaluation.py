@@ -63,7 +63,7 @@ class MscEvalV0(object):
         miou = ious.mean()
         return miou.item()
 
-def evaluatev0(respth='./pretrained', dspth='./data', backbone='CatNetSmall', scale=0.75, use_boundary_2=False, use_boundary_4=False, use_boundary_8=False, use_boundary_16=False, use_conv_last=False):
+def evaluatev0(respth='./checkpoints/train_STDC1-Seg/pths/model_maxmIOU50.pth', dspth='./data', backbone='STDCNet813', scale=0.5, use_boundary_2=False, use_boundary_4=False, use_boundary_8=True, use_boundary_16=False, use_conv_last=False):
     print('scale', scale)
     print('use_boundary_2', use_boundary_2)
     print('use_boundary_4', use_boundary_4)

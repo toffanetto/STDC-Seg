@@ -1,0 +1,30 @@
+INFO train.py(177): n_workers_train: 12
+INFO train.py(178): n_workers_val: 1
+INFO train.py(179): use_boundary_2: False
+INFO train.py(180): use_boundary_4: False
+INFO train.py(181): use_boundary_8: True
+INFO train.py(182): use_boundary_16: False
+INFO train.py(183): mode: train
+INFO train.py(360): it: 50/60000, lr: 0.000014, loss: 10.4928, boundery_bce_loss: 0.6448, boundery_dice_loss: 0.9360, eta: 5:20:58, time: 15.7410
+INFO train.py(360): it: 100/60000, lr: 0.000020, loss: 10.1115, boundery_bce_loss: 0.5966, boundery_dice_loss: 0.9395, eta: 5:06:56, time: 14.6972
+INFO train.py(360): it: 150/60000, lr: 0.000028, loss: 9.5639, boundery_bce_loss: 0.5375, boundery_dice_loss: 0.9381, eta: 5:04:47, time: 15.0881
+INFO train.py(360): it: 200/60000, lr: 0.000040, loss: 8.9330, boundery_bce_loss: 0.4709, boundery_dice_loss: 0.9344, eta: 5:03:45, time: 15.1241
+INFO train.py(360): it: 250/60000, lr: 0.000056, loss: 8.1700, boundery_bce_loss: 0.3992, boundery_dice_loss: 0.9313, eta: 5:01:47, time: 14.8091
+INFO train.py(360): it: 300/60000, lr: 0.000079, loss: 7.7377, boundery_bce_loss: 0.3254, boundery_dice_loss: 0.9276, eta: 5:00:05, time: 14.7174
+INFO train.py(360): it: 350/60000, lr: 0.000111, loss: 7.0041, boundery_bce_loss: 0.2613, boundery_dice_loss: 0.9172, eta: 4:58:45, time: 14.7003
+INFO train.py(360): it: 400/60000, lr: 0.000157, loss: 6.6865, boundery_bce_loss: 0.2130, boundery_dice_loss: 0.9039, eta: 4:57:34, time: 14.6532
+INFO train.py(360): it: 450/60000, lr: 0.000222, loss: 6.3976, boundery_bce_loss: 0.1710, boundery_dice_loss: 0.8929, eta: 4:56:33, time: 14.6262
+INFO train.py(360): it: 500/60000, lr: 0.000314, loss: 6.3312, boundery_bce_loss: 0.1415, boundery_dice_loss: 0.8656, eta: 4:55:34, time: 14.5686
+INFO train.py(360): it: 550/60000, lr: 0.000444, loss: 5.8780, boundery_bce_loss: 0.1294, boundery_dice_loss: 0.8176, eta: 4:54:44, time: 14.5789
+INFO train.py(360): it: 600/60000, lr: 0.000627, loss: 5.5901, boundery_bce_loss: 0.1240, boundery_dice_loss: 0.7782, eta: 4:53:59, time: 14.5710
+INFO train.py(360): it: 650/60000, lr: 0.000885, loss: 5.8744, boundery_bce_loss: 0.1162, boundery_dice_loss: 0.7469, eta: 4:53:22, time: 14.6027
+INFO train.py(360): it: 700/60000, lr: 0.001250, loss: 5.5053, boundery_bce_loss: 0.1283, boundery_dice_loss: 0.7237, eta: 4:52:46, time: 14.5857
+INFO train.py(360): it: 750/60000, lr: 0.001766, loss: 5.5017, boundery_bce_loss: 0.1306, boundery_dice_loss: 0.7239, eta: 4:52:12, time: 14.5650
+INFO train.py(360): it: 800/60000, lr: 0.002495, loss: 5.6375, boundery_bce_loss: 0.1411, boundery_dice_loss: 0.7024, eta: 4:51:42, time: 14.5939
+INFO train.py(360): it: 850/60000, lr: 0.003524, loss: 6.3689, boundery_bce_loss: 0.1423, boundery_dice_loss: 0.6989, eta: 4:51:20, time: 14.6708
+INFO train.py(360): it: 900/60000, lr: 0.004977, loss: 6.1272, boundery_bce_loss: 0.1469, boundery_dice_loss: 0.7132, eta: 4:50:56, time: 14.6444
+INFO train.py(360): it: 950/60000, lr: 0.007031, loss: 6.1063, boundery_bce_loss: 0.1509, boundery_dice_loss: 0.7030, eta: 4:50:33, time: 14.6349
+INFO train.py(360): it: 1000/60000, lr: 0.009931, loss: 6.3476, boundery_bce_loss: 0.1476, boundery_dice_loss: 0.7165, eta: 4:50:13, time: 14.6648
+INFO train.py(369): evaluating the model ...
+INFO train.py(370): setup and restore model
+INFO train.py(375): compute the mIOU
