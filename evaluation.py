@@ -4,6 +4,7 @@
 from logger import setup_logger
 from models.model_stages import BiSeNet
 from cityscapes import CityScapes
+from cityscapes import get_class_colors
 
 import torch
 import torch.nn as nn
@@ -17,7 +18,11 @@ import logging
 import time
 import numpy as np
 from tqdm import tqdm
-import math
+import math 
+
+from PIL import Image
+import matplotlib.pyplot as plt
+
 
 class MscEvalV0(object):
 
@@ -32,14 +37,16 @@ class MscEvalV0(object):
             diter = enumerate(dl)
         else:
             diter = enumerate(tqdm(dl))
-        for i, (imgs, label) in diter:
+        for i, (img, label, name, img_raw) in diter:
 
             N, _, H, W = label.shape
-
+            
+            label_raw = label
+            
             label = label.squeeze(1).cuda()
             size = label.size()[-2:]
 
-            imgs = imgs.cuda()
+            imgs = img.cuda()
 
             N, C, H, W = imgs.size()
             new_hw = [int(H*self.scale), int(W*self.scale)]
@@ -49,9 +56,39 @@ class MscEvalV0(object):
             logits = net(imgs)[0]
   
             logits = F.interpolate(logits, size=size,
-                    mode='bilinear', align_corners=True)
-            probs = torch.softmax(logits, dim=1)
-            preds = torch.argmax(probs, dim=1)
+                    mode='bilinear', align_corners=True) # Output vector
+            probs = torch.softmax(logits, dim=1) # Probability for each class vector
+            preds = torch.argmax(probs, dim=1) # Predicted class
+            
+            preds_tensor = preds[0].cpu()
+            preds_np = preds_tensor.numpy() # Matriz of predicted classes 
+            image_preds = get_class_colors(preds_np)
+            im = Image.fromarray(image_preds, "RGB")
+            im.save("./output/image_"+str(name[0])+".png")
+            
+            label_np = label_raw[0][0].numpy()
+            
+            image_label = get_class_colors(label_np)
+            
+            img_raw = img_raw[0].numpy()
+            
+            plt.figure(figsize=(21,8))
+            plt.subplot(1,3,1)
+            plt.title('Road picure', fontsize = 16)
+            plt.imshow(img_raw)
+            plt.axis('off')
+            plt.subplot(1,3,2)
+            plt.imshow(image_preds)
+            plt.title('Predicted', fontsize = 16)
+            plt.axis('off')
+            plt.subplot(1,3,3)
+            plt.imshow(image_label)
+            plt.title('Ground truth', fontsize = 16)
+            plt.axis('off')
+            plt.tight_layout(pad=0.2)
+            
+            plt.savefig("./output/sample_"+str(name[0])+".pdf",bbox_inches='tight')
+            
             keep = label != self.ignore_label
             hist += torch.bincount(
                 label[keep] * n_classes + preds[keep],
@@ -70,7 +107,7 @@ def evaluatev0(respth='./checkpoints/train_STDC1-Seg/pths/model_maxmIOU50.pth', 
     print('use_boundary_8', use_boundary_8)
     print('use_boundary_16', use_boundary_16)
     ## dataset
-    batchsize = 5
+    batchsize = 1
     n_workers = 2
     dsval = CityScapes(dspth, mode='val')
     dl = DataLoader(dsval,
@@ -260,13 +297,13 @@ if __name__ == "__main__":
         os.makedirs(log_dir)
     setup_logger(log_dir)
     
-    #STDC1-Seg50 mIoU 0.7222
+    # STDC1-Seg50 mIoU 0.7222
     # evaluatev0('./checkpoints/STDC1-Seg/model_maxmIOU50.pth', dspth='./data', backbone='STDCNet813', scale=0.5, 
     # use_boundary_2=False, use_boundary_4=False, use_boundary_8=True, use_boundary_16=False)
 
-    #STDC1-Seg75 mIoU 0.7450
-    # evaluatev0('./checkpoints/STDC1-Seg/model_maxmIOU75.pth', dspth='./data', backbone='STDCNet813', scale=0.75, 
-    # use_boundary_2=False, use_boundary_4=False, use_boundary_8=True, use_boundary_16=False)
+    # STDC1-Seg75 mIoU 0.7450
+    evaluatev0('./checkpoints/STDC1-Seg/model_maxmIOU75.pth', dspth='./data', backbone='STDCNet813', scale=0.75, 
+    use_boundary_2=False, use_boundary_4=False, use_boundary_8=True, use_boundary_16=False)
 
 
     #STDC2-Seg50 mIoU 0.7424
@@ -274,8 +311,8 @@ if __name__ == "__main__":
     # use_boundary_2=False, use_boundary_4=False, use_boundary_8=True, use_boundary_16=False)
 
     #STDC2-Seg75 mIoU 0.7704
-    evaluatev0('./checkpoints/STDC2-Seg/model_maxmIOU75.pth', dspth='./data', backbone='STDCNet1446', scale=0.75, 
-    use_boundary_2=False, use_boundary_4=False, use_boundary_8=True, use_boundary_16=False)
+    # evaluatev0('./checkpoints/STDC2-Seg/model_maxmIOU75.pth', dspth='./data', backbone='STDCNet1446', scale=0.75, 
+    # use_boundary_2=False, use_boundary_4=False, use_boundary_8=True, use_boundary_16=False)
 
    
 

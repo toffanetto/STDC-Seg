@@ -14,7 +14,19 @@ import json
 
 from transform import *
 
-
+def get_class_colors(out_pred):
+    with open('./cityscapes_info.json', 'r') as fr:
+            labels_info = json.load(fr)
+    lb_map = {el['trainId']: el['color'] for el in labels_info}
+    
+    out_image = np.zeros([out_pred.shape[0], out_pred.shape[1], 3], dtype=np.uint8)
+    
+    for h in range(out_pred.shape[0]):
+        for w in range(out_pred.shape[1]):
+            out_image[h, w] = np.uint8(lb_map[out_pred[h, w]])
+            
+    return out_image
+    
 
 class CityScapes(Dataset):
     def __init__(self, rootpth, cropsize=(640, 480), mode='train', 
@@ -89,6 +101,9 @@ class CityScapes(Dataset):
         impth = self.imgs[fn]
         lbpth = self.labels[fn]
         img = Image.open(impth).convert('RGB')
+        img_raw = Image.open(impth)
+        img_raw.load()
+        img_raw = np.asarray(img_raw, dtype="int32")
         label = Image.open(lbpth)
         if self.mode == 'train' or self.mode == 'trainval':
             im_lb = dict(im = img, lb = label)
@@ -97,7 +112,8 @@ class CityScapes(Dataset):
         img = self.to_tensor(img)
         label = np.array(label).astype(np.int64)[np.newaxis, :]
         label = self.convert_labels(label)
-        return img, label
+        
+        return img, label, fn, img_raw
 
 
     def __len__(self):
