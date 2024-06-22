@@ -20,6 +20,6 @@ for label in range(19):
     plt.imshow(out_image[label])
     plt.axis('off')
     
-plt.suptitle("Colors per label")
+plt.suptitle("Annotation color for each class")
 plt.tight_layout(pad=0.5)
 plt.savefig("./output/legend.pdf",bbox_inches='tight')
