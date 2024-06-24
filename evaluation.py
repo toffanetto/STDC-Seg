@@ -64,7 +64,7 @@ class MscEvalV0(object):
             preds_np = preds_tensor.numpy() # Matrix of predicted classes 
             image_preds = get_class_colors(preds_np)
             im = Image.fromarray(image_preds, "RGB")
-            im.save("./output/prediction_"+str(name[0])+".png")
+            im.save("./output/evaluation/prediction_"+str(name[0])+".png")
             
             label_np = label_raw[0][0].numpy()
             
@@ -87,7 +87,7 @@ class MscEvalV0(object):
             plt.axis('off')
             plt.tight_layout(pad=0.2)
             
-            plt.savefig("./output/sample_"+str(name[0])+".pdf",bbox_inches='tight')
+            plt.savefig("./output/evaluation/sample_"+str(name[0])+".pdf",bbox_inches='tight')
             
             keep = label != self.ignore_label
             hist += torch.bincount(
