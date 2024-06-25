@@ -99,8 +99,8 @@ def inference(dataset, respth='./checkpoints/train_STDC1-Seg/pths/model_maxmIOU5
 if __name__ == "__main__":
     
     #Select dataset:
-    dataset = CityScapes('./data', mode='val')
-    #dataset = UnicampScapes('./data')
+    #dataset = CityScapes('./data', mode='val')
+    dataset = UnicampScapes('./data')
     
     inference(dataset=dataset, respth='./checkpoints/STDC1-Seg/model_maxmIOU75.pth', backbone='STDCNet813', 
               scale=0.75, use_boundary_2=False, use_boundary_4=False, use_boundary_8=True, use_boundary_16=False)

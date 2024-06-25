@@ -16,20 +16,16 @@ class UnicampScapes(torch.utils.data.Dataset):
         self.imgs = {}
         imgnames = []
         impth = osp.join(rootpth, 'unicamp_scapes', 'inference')
-        folders = os.listdir(impth)
-        for fd in folders:
-            fdpth = osp.join(impth, fd)
-            im_names = os.listdir(fdpth)
-            names = [el.replace('.png', '') for el in im_names]
-            impths = [osp.join(fdpth, el) for el in im_names]
-            imgnames.extend(names)
-            self.imgs.update(dict(zip(names, impths)))
+        im_names = os.listdir(impth)
+        names = [el.replace('.jpg', '') for el in im_names]
+        impths = [osp.join(impth, el) for el in im_names]
+        imgnames.extend(names)
+        self.imgs.update(dict(zip(names, impths)))
             
         self.imnames = imgnames
         self.len = len(self.imnames)
-        print('self.len', self.mode, self.len)
+        print('UnicampScapes Dataset len: ', self.len)
         assert set(self.imnames) == set(self.imgs.keys())
-        assert set(self.imnames) == set(self.labels.keys())
         
         self.to_tensor = transforms.Compose([
             transforms.ToTensor(),
@@ -54,3 +50,4 @@ class UnicampScapes(torch.utils.data.Dataset):
 if __name__ == "__main__":
     from tqdm import tqdm
     ds = UnicampScapes('./data/')
+    print(ds.len)
